@@ -10,11 +10,20 @@ export default {
 } as ComponentMeta<typeof FileHookInput>;
 
 const Template: ComponentStory<typeof FileHookInput> = (args) => {
-    const { setValue, control } = useForm();
+    const { setValue, control, handleSubmit } = useForm();
 
-    console.log("Args", args.name);
-
-    return <FileHookInput {...args} setValue={setValue} control={control} />;
+    return (
+        <>
+            <FileHookInput {...args} setValue={setValue} control={control} />
+            <br />
+            <button
+                type="submit"
+                onClick={handleSubmit((data) => console.log(data))}
+            >
+                Submit
+            </button>
+        </>
+    );
 };
 
 export const Primary = Template.bind({});

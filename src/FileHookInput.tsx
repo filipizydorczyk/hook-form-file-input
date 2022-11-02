@@ -1,20 +1,21 @@
 import React from "react";
 import { Control, Controller, UseFormSetValue } from "react-hook-form";
+import {
+    convert as convertToFileRepresentation,
+    FileReresentation,
+} from "./utils";
 
 type FileHookInputProps = {
     className?: string;
     multiple?: boolean;
+    callback?: FilesChangeCallback;
     name: string;
     control: Control<any>;
     setValue: UseFormSetValue<any>;
 };
 
-type File = {
-    name: string;
-    size: number;
-    type: string;
-    base64: string;
-};
+type FilesChangeEvent = React.ChangeEventHandler<HTMLInputElement>;
+type FilesChangeCallback = (respresentations: FileReresentation[]) => any;
 
 export const FileHookInput = ({
     className,
@@ -22,30 +23,20 @@ export const FileHookInput = ({
     name,
     control,
     setValue,
+    callback = (files) => (multiple ? files : files[0]),
 }: FileHookInputProps) => {
-    const fileChangeHandler: React.ChangeEventHandler<HTMLInputElement> = (
-        data
-    ) => {
-        const reader = new FileReader();
-
-        if (data.target.files && data.target.files[0]) {
-            const file = data.target.files[0];
-
-            reader.readAsDataURL(file);
-            reader.onload = () => {
-                const { name: fileName, size, type } = file;
-                const result = reader.result;
-
-                if (result && typeof result === "string") {
-                    setValue(name, {
-                        name: fileName,
-                        size,
-                        type,
-                        base64: result.split(",").pop(),
-                    } as File);
-                }
-            };
+    const fileChangeHandler: FilesChangeEvent = async (data) => {
+        if (!data.target.files) {
+            callback([]);
+            return;
         }
+
+        const files = await Promise.all(
+            Array.from(data.target.files).map(convertToFileRepresentation)
+        );
+
+        const mappedFiles = callback(files);
+        setValue(name, mappedFiles);
     };
 
     return (

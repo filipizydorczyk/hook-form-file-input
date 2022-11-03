@@ -8,6 +8,7 @@ import {
 type FileHookInputProps = {
     className?: string;
     multiple?: boolean;
+    accept?: string;
     callback?: FilesChangeCallback;
     name: string;
     control: Control<any>;
@@ -23,6 +24,7 @@ export const FileHookInput = ({
     name,
     control,
     setValue,
+    accept,
     callback = (files) => (multiple ? files : files[0]),
 }: FileHookInputProps) => {
     const fileChangeHandler: FilesChangeEvent = async (data) => {
@@ -52,6 +54,7 @@ export const FileHookInput = ({
                     onBlur={onBlur}
                     type="file"
                     multiple={multiple}
+                    accept={accept}
                 />
             )}
         />

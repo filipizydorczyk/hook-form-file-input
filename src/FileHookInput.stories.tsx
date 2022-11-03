@@ -26,10 +26,35 @@ const Template: ComponentStory<typeof FileHookInput> = (args) => {
     );
 };
 
-export const Primary = Template.bind({});
+export const SingleFile = Template.bind({});
 
-Primary.args = {
-    ...Primary.args,
+SingleFile.args = {
+    ...SingleFile.args,
+    name: "test",
+    multiple: false,
+};
+
+export const MiltipleFiles = Template.bind({});
+
+MiltipleFiles.args = {
+    ...SingleFile.args,
     name: "test",
     multiple: true,
+};
+
+export const AcceptsPng = Template.bind({});
+
+AcceptsPng.args = {
+    ...AcceptsPng.args,
+    name: "test",
+    accept: ".png",
+};
+
+export const CustomCallback = Template.bind({});
+
+CustomCallback.args = {
+    ...CustomCallback.args,
+    name: "test",
+    multiple: false,
+    callback: (files) => files[0].base64,
 };

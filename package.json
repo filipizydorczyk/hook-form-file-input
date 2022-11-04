@@ -1,7 +1,7 @@
 {
     "name": "hook-form-file-input",
     "version": "0.1.0",
-    "private": true,
+    "private": false,
     "dependencies": {
         "@types/jest": "^27.5.2",
         "@types/node": "^16.18.0",

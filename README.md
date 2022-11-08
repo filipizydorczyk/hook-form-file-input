@@ -41,3 +41,7 @@ return (
 
 Also if you want to style this component to match your application you can use `className` and css to do some styling. If thats not enough you can always take the source code and implement ur own version of this compoment in your project.
 You can see examples in storybook.
+
+**Requirements (to build)**
+
+-   Node >= 16.2
